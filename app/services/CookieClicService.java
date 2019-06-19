@@ -1,6 +1,7 @@
 package services;
 
 import models.CookieClic;
+import models.CookieJson;
 import models.Utilisateur;
 import models.utils.BoosterCount;
 import play.db.jpa.JPA;
@@ -77,5 +78,13 @@ public class CookieClicService {
 //        }
 
         return cookiePerSecond;
+    }
+
+    public static CookieJson computeCookieJson(CookieClic cookieClic) {
+        CookieJson cookieJson = new CookieJson();
+        cookieJson.totalCookie = cookieClic.value + BoosterService.getCookies(cookieClic.utilisateur);
+        cookieJson.cookiePerSecond = CookieClicService.getCookiePerSecond(cookieClic.utilisateur);
+        cookieJson.boosters = BoosterService.findBoosterForUser(cookieClic.utilisateur);
+        return cookieJson;
     }
 }

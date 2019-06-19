@@ -12,6 +12,18 @@ import java.lang.reflect.Type;
 
 public class BoosterAdapter implements JsonSerializer<Booster> {
 
+    private static BoosterAdapter instance;
+
+    private BoosterAdapter() {
+    }
+
+    public static BoosterAdapter get() {
+        if(instance == null) {
+            instance = new BoosterAdapter();
+        }
+        return instance;
+    }
+
     @Override
     public JsonElement serialize(Booster booster, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject obj = new JsonObject();

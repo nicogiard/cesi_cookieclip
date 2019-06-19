@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Booster;
 import models.CookieClic;
 import models.CookieJson;
 import models.Utilisateur;
@@ -13,8 +12,6 @@ import play.mvc.Controller;
 import play.mvc.With;
 import services.BoosterService;
 import services.CookieClicService;
-
-import java.util.List;
 
 @With(Secure.class)
 public class ApplicationJavascript extends Controller {
@@ -39,43 +36,29 @@ public class ApplicationJavascript extends Controller {
     }
 
     public static void apiRefresh() {
-        Utilisateur connectedUser = Security.connectedUser();
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
 
-        CookieJson cookieJson = new CookieJson();
-        cookieJson.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-        cookieJson.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
-        cookieJson.boosters = BoosterService.findBoosterForUser(connectedUser);
+        CookieJson cookieJson = CookieClicService.computeCookieJson(cookieClic);
 
-        renderJSON(cookieJson, new BoosterAdapter());
+        renderJSON(cookieJson, BoosterAdapter.get());
     }
 
     public static void apiCookieClic() {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         CookieClicService.clicOnCookie(cookieClic);
 
-        Utilisateur connectedUser = Security.connectedUser();
+        CookieJson cookieJson = CookieClicService.computeCookieJson(cookieClic);
 
-        CookieJson cookieJson = new CookieJson();
-        cookieJson.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-        cookieJson.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
-        cookieJson.boosters = BoosterService.findBoosterForUser(connectedUser);
-
-        renderJSON(cookieJson, new BoosterAdapter());
+        renderJSON(cookieJson, BoosterAdapter.get());
     }
 
     public static void apiAcheter(EBooster booster) {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         BoosterService.buyBooster(cookieClic, booster);
 
-        Utilisateur connectedUser = Security.connectedUser();
+        CookieJson cookieJson = CookieClicService.computeCookieJson(cookieClic);
 
-        CookieJson cookieJson = new CookieJson();
-        cookieJson.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-        cookieJson.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
-        cookieJson.boosters = BoosterService.findBoosterForUser(connectedUser);
-
-        renderJSON(cookieJson, new BoosterAdapter());
+        renderJSON(cookieJson, BoosterAdapter.get());
     }
 
 }

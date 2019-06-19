@@ -10,6 +10,18 @@ import java.lang.reflect.Type;
 
 public class UtilisateurAdapter implements JsonSerializer<Utilisateur> {
 
+    private static UtilisateurAdapter instance;
+
+    private UtilisateurAdapter() {
+    }
+
+    public static UtilisateurAdapter get() {
+        if(instance == null) {
+            instance = new UtilisateurAdapter();
+        }
+        return instance;
+    }
+
     @Override
     public JsonElement serialize(Utilisateur utilisateur, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject obj = new JsonObject();

@@ -28,14 +28,13 @@
                 totalCookie = data.totalCookie;
                 cookiePerSecond = data.cookiePerSecond;
                 boosters = data.boosters;
-                boosters.reverse();
 
                 refreshUI();
             });
         };
 
         var refreshUI = function() {
-            $("#totalCookie").text(totalCookie + " cookies");
+            $("#totalCookie").text(totalCookie.toLocaleString() + " cookies");
             $("#cookiePerSecond").text(cookiePerSecond + " cookies/s");
 
             if(totalCookie > 10) {

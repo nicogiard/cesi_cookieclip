@@ -11,7 +11,7 @@ import java.util.List;
 public class BoosterService {
 
     public static List<Booster> findBoosterForUser(Utilisateur utilisateur) {
-        return Booster.find("utilisateur = ?1", utilisateur).fetch();
+        return Booster.find("utilisateur = ?1 ORDER BY dateAchat DESC", utilisateur).fetch();
     }
 
     public static void buyBooster(CookieClic cookieClic, EBooster booster) {

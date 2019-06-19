@@ -41,15 +41,9 @@ public class Application extends Controller {
     }
 
     public static void refresh() {
-        Utilisateur connectedUser = Security.connectedUser();
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-        List<Booster> boosters = BoosterService.findBoosterForUser(connectedUser);
-
-        CookieJson cookieStats = new CookieJson();
-        cookieStats.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-        cookieStats.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
-
-        render(cookieStats, boosters);
+        CookieJson cookieStats = CookieClicService.computeCookieJson(cookieClic);
+        render(cookieStats);
     }
 
     public static void cookieClic() {
