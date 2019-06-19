@@ -2,10 +2,8 @@ package models;
 
 import play.db.jpa.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="user")
@@ -22,6 +20,9 @@ public class Utilisateur extends Model {
 
     @OneToOne
     public Adresse adresse;
+
+    @OneToMany(mappedBy = "utilisateur")
+    List<Booster> boosters;
 
     @Override
     public String toString() {

@@ -2,12 +2,12 @@
 
     <a id="linkCookieClic" href="@{Application.cookieClic()}">Coockie Clic</a>
 
-    <span>${cookieClic.value}</span>
+    <span>${totalCookie}</span>
 
-    #{if cookieClic.value > models.types.EBooster.CLICKER.getCost()}
+    #{if totalCookie > models.types.EBooster.CLICKER.getCost()}
     <a href="@{Application.acheter(models.types.EBooster.CLICKER)}">Acheter un clicker</a>
     #{/if}
-    #{if cookieClic.value > models.types.EBooster.GRANDMA.getCost()}
+    #{if totalCookie > models.types.EBooster.GRANDMA.getCost()}
     <a href="@{Application.acheter(models.types.EBooster.GRANDMA)}">Acheter une GrandMère</a>
     #{/if}
 
@@ -15,7 +15,7 @@
     #{list boosters, as : 'booster'}
         <tr>
             <td>${booster.booster}</td>
-            <td>${booster.nombre}</td>
+            <td>${booster.dateAchat.format("dd/MM/yyyy HH:mm:ss")}</td>
         </tr>
     #{/list}
     </table>

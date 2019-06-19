@@ -2,16 +2,22 @@ package models.types;
 
 public enum EBooster {
 
-    CLICKER(10L),
-    GRANDMA(1000L);
+    CLICKER(10, 4),
+    GRANDMA(1000, 6);
 
-    private long cost;
+    private int cost;
+    private int multiplier;
 
-    EBooster(long cost) {
+    EBooster(int cost, int multiplier) {
         this.cost = cost;
+        this.multiplier = multiplier;
     }
 
-    public Long getCost() {
+    public int getCost() {
         return cost;
+    }
+
+    public int getMultiplier() {
+        return multiplier;
     }
 }

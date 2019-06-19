@@ -4,7 +4,9 @@ import models.Booster;
 import models.CookieClic;
 import models.Utilisateur;
 import models.types.EBooster;
+import org.apache.log4j.MDC;
 import play.Logger;
+import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -19,24 +21,39 @@ public class Application extends Controller {
     public static final String COOCKIE_CLIC = "coockieClic";
 
     @Before
-    private static void before() {
+    static void before() {
         Logger.info("--------------");
         Logger.info("nav : %s", request.url);
 
         Utilisateur connectedUser = Security.connectedUser();
         renderArgs.put(COOCKIE_CLIC, CookieClicService.getCoockieClicForUser(connectedUser));
+
+        MDC.put("username", connectedUser.email);
+    }
+
+    @After
+    static void after() {
+        MDC.remove("username");
     }
 
     public static void index() {
+        Utilisateur connectedUser = Security.connectedUser();
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-        List<Booster> boosters = BoosterService.findBoosterForUser(Security.connectedUser());
-        render(cookieClic, boosters);
+        List<Booster> boosters = BoosterService.findBoosterForUser(connectedUser);
+
+        long totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
+
+        render(totalCookie, boosters);
     }
 
     public static void refresh() {
+        Utilisateur connectedUser = Security.connectedUser();
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-        List<Booster> boosters = BoosterService.findBoosterForUser(Security.connectedUser());
-        renderTemplate("Application/refresh.html", cookieClic, boosters);
+        List<Booster> boosters = BoosterService.findBoosterForUser(connectedUser);
+
+        long totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
+
+        renderTemplate("Application/refresh.html", totalCookie, boosters);
     }
 
     public static void cookieClic() {

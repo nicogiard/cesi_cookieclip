@@ -5,6 +5,8 @@ import models.CookieClic;
 import models.Utilisateur;
 import models.types.EBooster;
 
+import java.util.Date;
+
 public class CookieClicService {
 
     public static CookieClic getCoockieClicForUser(Utilisateur connectedUser) {
@@ -23,16 +25,10 @@ public class CookieClicService {
     }
 
     public static void buyBooster(CookieClic cookieClic, EBooster booster) {
-        Booster userBooster = Booster.find("booster = ?1 AND utilisateur = ?2", booster, cookieClic.utilisateur).first();
-        if(userBooster == null) {
-            userBooster = new Booster();
-            userBooster.utilisateur = cookieClic.utilisateur;
-            userBooster.booster = booster;
-        }
-        userBooster.nombre++;
+        Booster userBooster = new Booster();
+        userBooster.utilisateur = cookieClic.utilisateur;
+        userBooster.booster = booster;
+        userBooster.dateAchat = new Date();
         userBooster.save();
-
-        cookieClic.value -= booster.getCost();
-        cookieClic.save();
     }
 }
