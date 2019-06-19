@@ -8,6 +8,7 @@ import play.Logger;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
+import services.BoosterService;
 import services.CookieClicService;
 
 import java.util.List;
@@ -28,9 +29,7 @@ public class Application extends Controller {
 
     public static void index() {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-
-        List<Booster> boosters = Booster.find("utilisateur = ?1", Security.connectedUser()).fetch();
-
+        List<Booster> boosters = BoosterService.findBoosterForUser(Security.connectedUser());
         render(cookieClic, boosters);
     }
 
@@ -41,11 +40,8 @@ public class Application extends Controller {
     }
 
     public static void acheter(EBooster booster) {
-        Logger.info("%s", booster);
-
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         CookieClicService.buyBooster(cookieClic, booster);
-
         index();
     }
 

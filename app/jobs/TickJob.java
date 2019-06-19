@@ -14,7 +14,7 @@ import java.util.List;
 public class TickJob extends Job {
 
     public void doJob() {
-        Logger.info("job...");
+        Logger.info("TickJob starting...");
 
         List<Booster> boostersClicker = Booster.find("").fetch();
         for (Booster booster : boostersClicker) {
@@ -26,8 +26,7 @@ public class TickJob extends Job {
             }
             cookieClicUser.save();
         }
-
-
+        Logger.info("TickJob ended");
     }
 
 }
