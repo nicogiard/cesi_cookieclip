@@ -6,6 +6,8 @@ import models.utils.BoosterCount;
 import javax.persistence.*;
 import java.util.Date;
 
+// Utilisé dans CookieClicService.getCookiePerSecond()
+// Doit être déclaré dans une classe @Entity
 @SqlResultSetMapping(
         name = "BoosterCountMapping",
         classes = @ConstructorResult(

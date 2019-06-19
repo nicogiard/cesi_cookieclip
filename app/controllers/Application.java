@@ -28,13 +28,10 @@ public class Application extends Controller {
 
         Utilisateur connectedUser = Security.connectedUser();
         renderArgs.put(COOCKIE_CLIC, CookieClicService.getCoockieClicForUser(connectedUser));
-
-        MDC.put("username", connectedUser.email);
     }
 
     @After
     public static void after() {
-        MDC.remove("username");
     }
 
     public static void index() {
@@ -50,7 +47,6 @@ public class Application extends Controller {
         cookieStats.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
         cookieStats.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
 
-//        renderTemplate("Application/refresh.html", totalCookie, boosters, cookiePerSecond);
         render(cookieStats, boosters);
     }
 
