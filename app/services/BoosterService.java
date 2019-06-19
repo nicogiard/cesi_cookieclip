@@ -22,7 +22,6 @@ public class BoosterService {
         userBooster.booster = booster;
         userBooster.dateAchat = new Date();
         userBooster.save();
-
     }
 
     public static long getCookies(Utilisateur utilisateur) {

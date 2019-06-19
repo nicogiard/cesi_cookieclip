@@ -11,8 +11,10 @@ GET     /cookie/clic                            Application.cookieClic
 GET     /cookie/refresh                         Application.refresh
 GET     /shop/buy                               Application.acheter
 
-
-GET     /api/cookie                             Application.apiRefresh
+GET     /javascript                             ApplicationJavascript.index
+GET     /api/refresh                            ApplicationJavascript.apiRefresh
+GET     /api/cookie/clic                        ApplicationJavascript.apiCookieClic
+GET     /api/shop/buy                           ApplicationJavascript.apiAcheter
 
 
 # Ignore favicon requests

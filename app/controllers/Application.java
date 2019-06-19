@@ -4,6 +4,8 @@ import models.Booster;
 import models.CookieClic;
 import models.CookieJson;
 import models.Utilisateur;
+import models.adapters.BoosterAdapter;
+import models.adapters.UtilisateurAdapter;
 import models.types.EBooster;
 import org.apache.log4j.MDC;
 import play.Logger;
@@ -60,18 +62,6 @@ public class Application extends Controller {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         BoosterService.buyBooster(cookieClic, booster);
         index();
-    }
-
-
-    public static void apiRefresh() {
-        Utilisateur connectedUser = Security.connectedUser();
-        CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-
-        CookieJson cookieJson = new CookieJson();
-        cookieJson.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-        cookieJson.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
-
-        renderJSON(cookieJson);
     }
 
 }

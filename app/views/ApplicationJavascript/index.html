@@ -1,0 +1,73 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h1>CookieClip</h1>
+<h2>Bonjour ${connectedUser.prenom} ${connectedUser.nom}</h2>
+
+<a id="lnkCookieClic" href="@{ApplicationJavascript.apiCookieClic()}">Coockie Clic</a>
+
+<span id="totalCookie"></span>
+<span id="cookiePerSecond"></span>
+
+<a id="lnkBuyClicker" href="@{ApplicationJavascript.apiAcheter(models.types.EBooster.CLICKER)}" class="lnk-buy">Acheter un clicker</a>
+<a id="lnkBuyGrandMa" href="@{ApplicationJavascript.apiAcheter(models.types.EBooster.GRANDMA)}" class="lnk-buy">Acheter une GrandMère</a>
+
+<table id="boosters"></table>
+
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(function() {
+        $(".lnk-buy").hide();
+
+        var srvRefreshAction = #{jsAction @ApplicationJavascript.apiRefresh() /};
+
+        var totalCookie= 0, cookiePerSecond = 0, boosters = [];
+
+        var refreshData = function(url) {
+            $.get(url, function(data) {
+                totalCookie = data.totalCookie;
+                cookiePerSecond = data.cookiePerSecond;
+                boosters = data.boosters;
+                boosters.reverse();
+
+                refreshUI();
+            });
+        };
+
+        var refreshUI = function() {
+            $("#totalCookie").text(totalCookie + " cookies");
+            $("#cookiePerSecond").text(cookiePerSecond + " cookies/s");
+
+            if(totalCookie > 10) {
+                $("#lnkBuyClicker").show();
+            } else {
+                $("#lnkBuyClicker").hide();
+            }
+            if(totalCookie > 100) {
+                $("#lnkBuyGrandMa").show();
+            } else {
+                $("#lnkBuyGrandMa").hide();
+            }
+
+            $("#boosters").html("");
+            boosters.forEach(function(value){
+                $("#boosters").append("<tr><td>" + value.booster + "</td><td>" + new Date(value.dateAchat).toLocaleString() + "</td></tr>");
+            })
+        };
+
+        $("a").on('click', function (e) {
+            e.preventDefault();
+
+            refreshData($(this).attr('href'));
+        });
+
+        refreshData(srvRefreshAction());
+
+        setInterval(function() {
+            totalCookie += cookiePerSecond;
+            refreshUI();
+        }, 1000);
+
+    });
+</script>
+#{/set}
