@@ -9,6 +9,8 @@
 #{set 'moreScripts'}
 <script type="text/javascript">
     $(function() {
+        var refreshAction = #{jsAction @Application.refresh() /}
+
         $("#panelCookie").load("@{Application.refresh()}");
 
         $(document).on('click', "#linkCookieClic", function(e) {

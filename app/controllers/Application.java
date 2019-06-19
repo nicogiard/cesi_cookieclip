@@ -47,7 +47,8 @@ public class Application extends Controller {
 
         long totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
 
-        renderTemplate("Application/refresh.html", totalCookie, boosters);
+//        renderTemplate("Application/refresh.html", totalCookie, boosters);
+        render(totalCookie, boosters);
     }
 
     public static void cookieClic() {
@@ -58,7 +59,7 @@ public class Application extends Controller {
 
     public static void acheter(EBooster booster) {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-        CookieClicService.buyBooster(cookieClic, booster);
+        BoosterService.buyBooster(cookieClic, booster);
         index();
     }
 

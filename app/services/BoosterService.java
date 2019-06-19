@@ -1,7 +1,9 @@
 package services;
 
 import models.Booster;
+import models.CookieClic;
 import models.Utilisateur;
+import models.types.EBooster;
 
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,17 @@ public class BoosterService {
 
     public static List<Booster> findBoosterForUser(Utilisateur utilisateur) {
         return Booster.find("utilisateur = ?1", utilisateur).fetch();
+    }
+
+    public static void buyBooster(CookieClic cookieClic, EBooster booster) {
+        // TODO : Est ce que je peux l'acheter ????
+
+        Booster userBooster = new Booster();
+        userBooster.utilisateur = cookieClic.utilisateur;
+        userBooster.booster = booster;
+        userBooster.dateAchat = new Date();
+        userBooster.save();
+
     }
 
     public static long getCookies(Utilisateur utilisateur) {

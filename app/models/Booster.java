@@ -1,13 +1,12 @@
 package models;
 
 import models.types.EBooster;
-import play.db.jpa.Model;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Booster extends Model {
+public class Booster extends NewModel {
 
     @Enumerated(EnumType.STRING)
     public EBooster booster;

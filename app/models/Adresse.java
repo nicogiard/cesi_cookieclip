@@ -1,11 +1,9 @@
 package models;
 
-import play.db.jpa.Model;
-
 import javax.persistence.Entity;
 
 @Entity
-public class Adresse extends Model {
+public class Adresse extends NewModel {
 
     public String rue;
 

@@ -1,12 +1,10 @@
 package models;
 
-import play.db.jpa.Model;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-public class CookieClic extends Model {
+public class CookieClic extends NewModel {
 
     public Long value;
 

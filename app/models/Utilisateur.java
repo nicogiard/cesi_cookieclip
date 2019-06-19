@@ -1,13 +1,10 @@
 package models;
 
-import play.db.jpa.Model;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="user")
-public class Utilisateur extends Model {
+public class Utilisateur extends NewModel {
 
     public String nom;
 

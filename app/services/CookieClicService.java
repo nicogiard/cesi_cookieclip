@@ -23,12 +23,4 @@ public class CookieClicService {
         cookieClic.value++;
         cookieClic.save();
     }
-
-    public static void buyBooster(CookieClic cookieClic, EBooster booster) {
-        Booster userBooster = new Booster();
-        userBooster.utilisateur = cookieClic.utilisateur;
-        userBooster.booster = booster;
-        userBooster.dateAchat = new Date();
-        userBooster.save();
-    }
 }
