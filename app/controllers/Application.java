@@ -46,9 +46,10 @@ public class Application extends Controller {
         List<Booster> boosters = BoosterService.findBoosterForUser(connectedUser);
 
         long totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
+        long cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
 
-//        renderTemplate("Application/refresh.html", totalCookie, boosters);
-        render(totalCookie, boosters);
+//        renderTemplate("Application/refresh.html", totalCookie, boosters, cookiePerSecond);
+        render(totalCookie, boosters, cookiePerSecond);
     }
 
     public static void cookieClic() {
