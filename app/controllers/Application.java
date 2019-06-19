@@ -37,13 +37,7 @@ public class Application extends Controller {
     }
 
     public static void index() {
-        Utilisateur connectedUser = Security.connectedUser();
-        CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
-        List<Booster> boosters = BoosterService.findBoosterForUser(connectedUser);
-
-        long totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-
-        render(totalCookie, boosters);
+        render();
     }
 
     public static void refresh() {

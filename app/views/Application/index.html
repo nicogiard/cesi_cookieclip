@@ -9,6 +9,8 @@
 #{set 'moreScripts'}
 <script type="text/javascript">
     $(function() {
+        $("#panelCookie").load("@{Application.refresh()}");
+
         $(document).on('click', "#linkCookieClic", function(e) {
             e.preventDefault();
             $.get($(this).attr('href'), function(data) {

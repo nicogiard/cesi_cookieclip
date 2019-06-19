@@ -26,6 +26,7 @@ public class TickJob extends Job {
 //            }
 //            cookieClicUser.save();
 //        }
+
         Logger.info("TickJob ended");
     }
 
