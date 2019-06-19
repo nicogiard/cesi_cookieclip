@@ -1,10 +1,19 @@
 package models;
 
 import models.types.EBooster;
+import models.utils.BoosterCount;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@SqlResultSetMapping(
+        name = "BoosterCountMapping",
+        classes = @ConstructorResult(
+                targetClass = BoosterCount.class,
+                columns = {
+                        @ColumnResult(name = "booster", type = String.class),
+                        @ColumnResult(name = "nombre", type = Integer.class)
+                }))
 @Entity
 public class Booster extends NewModel {
 

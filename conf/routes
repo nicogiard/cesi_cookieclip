@@ -11,6 +11,10 @@ GET     /cookie/clic                            Application.cookieClic
 GET     /cookie/refresh                         Application.refresh
 GET     /shop/buy                               Application.acheter
 
+
+GET     /api/cookie                             Application.apiRefresh
+
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

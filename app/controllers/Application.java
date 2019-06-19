@@ -2,6 +2,7 @@ package controllers;
 
 import models.Booster;
 import models.CookieClic;
+import models.CookieJson;
 import models.Utilisateur;
 import models.types.EBooster;
 import org.apache.log4j.MDC;
@@ -21,7 +22,7 @@ public class Application extends Controller {
     public static final String COOCKIE_CLIC = "coockieClic";
 
     @Before
-    static void before() {
+    public static void before() {
         Logger.info("--------------");
         Logger.info("nav : %s", request.url);
 
@@ -32,7 +33,7 @@ public class Application extends Controller {
     }
 
     @After
-    static void after() {
+    public static void after() {
         MDC.remove("username");
     }
 
@@ -45,11 +46,12 @@ public class Application extends Controller {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         List<Booster> boosters = BoosterService.findBoosterForUser(connectedUser);
 
-        long totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
-        long cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
+        CookieJson cookieStats = new CookieJson();
+        cookieStats.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
+        cookieStats.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
 
 //        renderTemplate("Application/refresh.html", totalCookie, boosters, cookiePerSecond);
-        render(totalCookie, boosters, cookiePerSecond);
+        render(cookieStats, boosters);
     }
 
     public static void cookieClic() {
@@ -62,6 +64,18 @@ public class Application extends Controller {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         BoosterService.buyBooster(cookieClic, booster);
         index();
+    }
+
+
+    public static void apiRefresh() {
+        Utilisateur connectedUser = Security.connectedUser();
+        CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
+
+        CookieJson cookieJson = new CookieJson();
+        cookieJson.totalCookie = cookieClic.value + BoosterService.getCookies(connectedUser);
+        cookieJson.cookiePerSecond = CookieClicService.getCookiePerSecond(connectedUser);
+
+        renderJSON(cookieJson);
     }
 
 }

@@ -1,24 +1,20 @@
-<div id="panelCookie">
+<a id="linkCookieClic" href="@{Application.cookieClic()}">Coockie Clic</a>
 
-    <a id="linkCookieClic" href="@{Application.cookieClic()}">Coockie Clic</a>
+<span>${cookieStats.totalCookie}</span>
+<span>${cookieStats.cookiePerSecond}</span>
 
-    <span>${totalCookie}</span>
-    <span>${cookiePerSecond}</span>
+#{if cookieStats.totalCookie > models.types.EBooster.CLICKER.getCost()}
+<a href="@{Application.acheter(models.types.EBooster.CLICKER)}">Acheter un clicker</a>
+#{/if}
+#{if cookieStats.totalCookie > models.types.EBooster.GRANDMA.getCost()}
+<a href="@{Application.acheter(models.types.EBooster.GRANDMA)}">Acheter une GrandMère</a>
+#{/if}
 
-    #{if totalCookie > models.types.EBooster.CLICKER.getCost()}
-    <a href="@{Application.acheter(models.types.EBooster.CLICKER)}">Acheter un clicker</a>
-    #{/if}
-    #{if totalCookie > models.types.EBooster.GRANDMA.getCost()}
-    <a href="@{Application.acheter(models.types.EBooster.GRANDMA)}">Acheter une GrandMère</a>
-    #{/if}
-
-    <table>
-    #{list boosters, as : 'booster'}
-        <tr>
-            <td>${booster.booster}</td>
-            <td>${booster.dateAchat.format("dd/MM/yyyy HH:mm:ss")}</td>
-        </tr>
-    #{/list}
-    </table>
-
-</div>
+<table>
+#{list boosters, as : 'booster'}
+    <tr>
+        <td>${booster.booster}</td>
+        <td>${booster.dateAchat.format("dd/MM/yyyy HH:mm:ss")}</td>
+    </tr>
+#{/list}
+</table>
