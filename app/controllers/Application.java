@@ -33,10 +33,16 @@ public class Application extends Controller {
         render(cookieClic, boosters);
     }
 
-    public static void coockieClic() {
+    public static void refresh() {
+        CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
+        List<Booster> boosters = BoosterService.findBoosterForUser(Security.connectedUser());
+        renderTemplate("Application/refresh.html", cookieClic, boosters);
+    }
+
+    public static void cookieClic() {
         CookieClic cookieClic = (CookieClic) renderArgs.get(COOCKIE_CLIC);
         CookieClicService.clicOnCookie(cookieClic);
-        renderText(cookieClic.value);
+        renderText("OK");
     }
 
     public static void acheter(EBooster booster) {

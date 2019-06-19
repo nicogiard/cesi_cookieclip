@@ -4,35 +4,21 @@
 <h1>CookieClip</h1>
 <h2>Bonjour ${connectedUser.prenom} ${connectedUser.nom}</h2>
 
-<a id="linkCookieClic" href="@{Application.coockieClic()}">Coockie Clic</a>
-
-<span id="cookieValue">${cookieClic.value}</span>
-
-#{if cookieClic.value > models.types.EBooster.CLICKER.getCost()}
-<a href="@{Application.acheter(models.types.EBooster.CLICKER)}">Acheter un clicker</a>
-#{/if}
-#{if cookieClic.value > models.types.EBooster.GRANDMA.getCost()}
-<a href="@{Application.acheter(models.types.EBooster.GRANDMA)}">Acheter une GrandMère</a>
-#{/if}
-
-<table>
-#{list boosters, as : 'booster'}
-    <tr>
-        <td>${booster.booster}</td>
-        <td>${booster.nombre}</td>
-    </tr>
-#{/list}
-</table>
-
+#{include 'Application/refresh.html'/}
 
 #{set 'moreScripts'}
 <script type="text/javascript">
     $(function() {
-        $("#linkCookieClic").on('click', function(e) {
+        $(document).on('click', "#linkCookieClic", function(e) {
             e.preventDefault();
-
-            $("#cookieValue").load($(this).attr('href'));
+            $.get($(this).attr('href'), function(data) {
+                $("#panelCookie").load("@{Application.refresh()}");
+            });
         });
+
+        setInterval(function(){
+            $("#panelCookie").load("@{Application.refresh()}");
+        }, 1000);
     });
 </script>
 #{/set}

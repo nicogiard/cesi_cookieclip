@@ -7,7 +7,8 @@
 
 # Home page
 GET     /                                       Application.index
-GET     /cookie/clic                            Application.coockieClic
+GET     /cookie/clic                            Application.cookieClic
+GET     /cookie/refresh                         Application.refresh
 GET     /shop/buy                               Application.acheter
 
 # Ignore favicon requests
