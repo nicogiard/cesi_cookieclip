@@ -21,7 +21,7 @@ public class Application extends Controller {
     @Before
     private static void before() {
         Logger.info("--------------");
-        Logger.info("nav : %s", request.action);
+        Logger.info("nav : %s", request.url);
 
         Utilisateur connectedUser = Security.connectedUser();
         renderArgs.put(COOCKIE_CLIC, CookieClicService.getCoockieClicForUser(connectedUser));
